@@ -1,72 +1,69 @@
 # Hospital Readmissions & Utilization Analytics
 
 ## Background and Overview
-In a simulated LeonDab Hospitals scenario, leadership sought to better understand the drivers of 30-day patient readmissions and prolonged hospital stays in order to improve patient outcomes and operational efficiency. Leadership was particularly concerned about increasing bed occupancy pressures and inconsistent discharge outcomes across patient groups.
 
-This project analyzes a dataset of **1,500 inpatient encounters**, focusing on length of stay (LOS), readmission rates, demographic factors, discharge practices, insurance categories, and primary diagnoses. The objective was to identify patterns associated with readmissions and extended hospitalizations and to present these findings through an interactive Power BI dashboard to support clinical and administrative decision-making.
+Hospitals face persistent challenges managing patient readmissions and prolonged hospital stays, both of which increase operational costs and strain bed capacity. This project analyzes 1,500 inpatient encounters to identify clinical and demographic drivers of 30-day readmissions and extended length of stay (LOS). The analysis focuses on operational efficiency and patient outcome monitoring by examining discharge patterns, diagnoses, comorbidity burden, insurance coverage, and demographic characteristics. 
 
-The analysis defines **long stays as ≥7 days** and **short stays as <3 days**, enabling consistent tracking of hospitalization severity and resource utilization.
+The resulting Power BI dashboard was designed as a single executive reporting page to provide hospital leadership with a consolidated view of hospitalization severity, patient flow trends, and readmission risk indicators.
+
+![](images/dashboard.png)
 
 ---
 
 ## Data Structure Overview
-The dataset consists of **1,500 patient records**, with each row representing a unique hospital encounter. The data includes demographic information (age group and gender), clinical attributes (diagnosis category and comorbidity score), administrative variables (insurance type and discharge disposition), and time-based measures such as admission month and length of stay.
 
-A dedicated date dimension table was created to support time-series analysis and monthly trend reporting. Derived fields were calculated to categorize LOS into short, and long stay groups and to compute key performance indicators such as readmission rate, average LOS, and patient distribution across clinical and demographic segments.
+The dataset contains 1,500 hospital encounter records, with each row representing a unique inpatient admission. Core fields include demographic attributes (age group and gender), clinical variables (primary diagnosis and comorbidity score), operational attributes (insurance type and discharge disposition), and hospitalization metrics such as admission month and length of stay.
 
-Relationships were modeled to enable cross-filtering across demographics, clinical drivers, and operational outcomes, ensuring that users could explore trends interactively across the dashboard pages.
+Derived columns were created to classify hospitalization duration into short stay (<3 days), medium stay (3–6 days), and long stay (≥7 days). A dedicated date dimension supported monthly trend analysis, while calculated measures were implemented to compute KPIs including readmission rate, LOS statistics, and patient distribution metrics. Relationships were structured to enable cross-filtering across demographics, diagnoses, and operational outcomes.
 
-### 🛠 Tools & Technologies
-- MySQL (SQL Data Preparation)  
-- Power BI (Data Modeling & Visualization)  
-- DAX (Measures & Calculations)  
-- Healthcare Analytics Framework  
+![](images/relationship.png)
+
+---
+
+## Technical Stack
+
+- Power BI  
+- DAX  
+- SQL Server (data storage and preparation)
 
 ---
 
 ## Executive Summary
-The analysis found that the **overall readmission rate was approximately 16%**, representing about **240 readmitted patients** within 30 days. The **average length of stay was 7.45 days**, with a **median LOS of 7 days**, indicating that most patients experienced moderately extended hospitalizations.
 
-Long stays were a dominant pattern in the dataset, accounting for **868 patients (57.87%)**. Readmission rates varied by diagnosis, with **Heart Failure and Hypertension showing the highest rate at approximately 17%**, followed by **Diabetes at 16%**, **Kidney disease and COPD were pegged at 14% respectively**. Demographic analysis indicated increasing readmission risk with older age groups, while gender differences were relatively balanced across most measures.
+The analysis reviewed 1,500 inpatient encounters, identifying 314 readmissions, which represents an overall readmission rate of approximately 21%. Hospitalization duration was relatively extended, with an average LOS of 7.45 days and a median LOS of 7 days, indicating that many patients required prolonged care.
 
-Operationally, discharge disposition emerged as an important factor, as non-routine discharges were associated with higher readmission likelihood compared to routine home discharges.
+Long-stay patients accounted for 868 encounters (57.87%), significantly outweighing short-stay cases, which represented only 327 patients (21.8%). Diagnosis-level analysis revealed elevated readmission rates among cardiovascular and chronic disease categories, while gender differences remained minimal across most outcome measures. Monthly patient trends showed fluctuating admission volumes, and operational factors such as discharge disposition demonstrated strong associations with readmission outcomes.
 
----
-
-## 📷 Dashboard Preview
 ![](images/kpi.png)
 
 ---
 
 ## Insights Deep Dive
-Length of stay distribution showed that **868 patients (57.87%) experienced long stays**, indicating a strong skew toward prolonged hospitalization. Patients aged **30-44 accounted for the largest share of long-stay admissions**, averaging LOS values approximately **1.4–1.8 days longer** than younger cohorts.
 
-Clinical complexity increased alongside hospitalization duration. The scatter analysis indicated a **very weak relationship** between comorbidity score and length of stay (correlation ≈ **0.02**). Male and female patients showed nearly identical averages (≈ **2.6** comorbidity score and **~7.5–7.6 days** LOS), suggesting that comorbidity level alone was **not a strong predictor** of prolonged hospitalization in this dataset.
+Length-of-stay distribution revealed a heavy concentration of prolonged hospitalizations, with 57.87% of patients classified as long-stay, compared to 21.8% short-stay encounters. Patients aged 45-59 and below demonstrated higher LOS averages, typically 1.4–1.8 days longer than older age groups; patients aged 75+ exhibited higher average comorbidity scores, reinforcing the link between clinical complexity and extended hospital utilization.
 
-Diagnosis-level analysis demonstrated clear readmission variation. **Heart Failure and Hypertention patients recorded a readmission rate of about 17%**, translating to roughly **1 in every 6 encounters**, while **Diabetes (approximately 16%)** is almost at par with the dataset’s overall average of **16%**. Lower-risk diagnosis groups remained closer to **14%**, suggesting targeted intervention opportunities.
+![](images/los&comorbidity_by_age_group.png)
 
-Gender comparisons revealed relatively balanced readmission outcomes, with male and female rates differing by less than **2 percentage points**, indicating that demographic sex differences alone were not a primary driver of readmission risk.
+Readmission patterns were relatively balanced across gender, with differences typically remaining below 2 percentage points, indicating that gender alone was not a primary driver of hospital returns. Diagnosis-level variation was more pronounced, with chronic cardiovascular and metabolic conditions exceeding the dataset average readmission rate of 21%, highlighting potential targets for care management interventions.
 
-Insurance analysis showed only modest variability, with readmission rates across payer categories typically falling within a **3–4 percentage point range**, reinforcing that clinical factors outweighed financial coverage differences in determining outcomes.
+![](images/readmission_by_gender.png)
 
-Discharge disposition displayed one of the strongest operational signals. Patients discharged to non-home care settings demonstrated readmission rates approximately **6–8 percentage points higher** than routine home discharges, suggesting that transitional care processes and post-discharge monitoring represent critical intervention points.
+![](images/readmission_by_diagnosis.png)
 
-Monthly patient volumes ranged within a relatively stable band, with fluctuations generally staying within **±10% of average monthly admissions**, indicating consistent hospital utilization rather than seasonal spikes. LOS frequency peaked within the **6–10 day range**, aligning with the high proportion of long-stay encounters.
+Insurance-level analysis showed that long-stay patients were distributed across payer types with only moderate variation between public and private insurance while the uninsured represented only 9.1%, suggesting that hospitalization duration was driven more strongly by clinical severity than by coverage type. Monthly patient trends remained unstable but within approximately ±10% of average monthly admissions, indicating consistent service demand without significant seasonal fluctuations.
+
+![](images/long_stay_by_insurance.png)
+
+![](images/patients_by_month.png)
+
+Discharge disposition emerged as one of the strongest operational indicators of readmission risk. It showed that routine home discharges accounted for the highest number of readmissions (220 cases), followed by rehabilitation facilities (50), skilled nursing facilities (36), and discharges against medical advice (7), indicating that absolute readmission volume was concentrated among patients returning home rather than exclusively with post-acute care settings.
+
+![](images/readmission_by_discharge.png)
 
 ---
 
 ## Recommendations
-Hospitals should prioritize targeted discharge planning for high-risk diagnoses such as **Heart Failure, Hypertension, and Diabetes**, as these categories consistently exhibit elevated readmission rates. Structured follow-up programs and patient education initiatives may help reduce preventable returns to the hospital.
 
-Clinical teams should implement early risk stratification for patients projected to exceed seven days of hospitalization, as long-stay patients represent almost **60% of encounters** and contribute significantly to bed utilization pressures.
+Hospitals should prioritize targeted discharge planning and follow-up programs for high-risk diagnoses associated with elevated readmission rates, particularly chronic cardiovascular and metabolic conditions such as heart failure, hypertension and diabetes. Early risk stratification protocols should be implemented for patients projected to exceed seven days of hospitalization, as long-stay patients represent over 57.87% of total encounters and significantly influence bed utilization.
 
-Care coordinators should review discharge workflows, particularly for non-routine discharge types, to ensure adequate post-discharge support and continuity of care. Strengthening communication between inpatient teams and outpatient providers may reduce avoidable readmissions.
-
-Lastly, continued monitoring of demographic trends and comorbidity patterns is recommended to identify vulnerable patient populations early and to guide resource allocation toward preventive interventions.
-
----
-
-## 👤 Author
-Pantaleon Akujobi  
-Healthcare & Data Analytics Projects
-
+Transitional care coordination should be strengthened for non-routine discharge types, where readmission risk is measurably higher. Monthly operational monitoring should remain embedded within executive dashboards to maintain visibility into patient flow trend, while ongoing tracking of comorbidity burden and LOS trends can help identify emerging clinical risk clusters before they translate into readmissions.
